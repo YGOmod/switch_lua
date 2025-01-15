@@ -23,4 +23,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: SwitchLua
-        path: source/${{ name }}.nro
+        path: source/SwitchLua.nro
