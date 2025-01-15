@@ -13,7 +13,7 @@ jobs:
         submodules: recursive
 
     - name: Build
-      run: make generic
+      run: make all
 
     - uses: actions/upload-artifact@master
       with:
