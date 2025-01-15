@@ -1,13 +1,12 @@
 // Include the most common headers from the C standard library
 #include <stdio.h>
 #include <stdlib.h>
-
-
-  #include <lua/lua.h>
-  #include <lua/lualib.h>
-  #include <lua/lauxlib.h>
-
 #include <string.h>
+
+// Include Lua headers
+#include <lua/lua.h>
+#include <lua/lualib.h>
+#include <lua/lauxlib.h>
 
 // Include the main libnx system header, for Switch development
 #include <switch.h>
@@ -22,16 +21,27 @@ int main(int argc, char* argv[])
     //   take a look at the graphics/opengl set of examples, which uses EGL instead.
     consoleInit(NULL);
 
-    // initialization
-    lua_State * L = luaL_newstate();    /* opens Lua */
-    luaL_openlibs(L);                  /* opens the standard libraries */
+    // Initialization
+    lua_State *L = luaL_newstate();  /* opens Lua */
+    luaL_openlibs(L);                /* opens the standard libraries */
 
-    // execute script
-    const char lua_script[] = "print('Hello World from lua!')";
-    int load_stat = luaL_loadbuffer(L,lua_script,strlen(lua_script),lua_script);
-    lua_pcall(L, 0, 0, 0);
+    // Execute script
+    const char lua_script[] = "print('Hello World from Lua!')";
+    int load_stat = luaL_loadbuffer(L, lua_script, strlen(lua_script), lua_script);
+    if (load_stat != LUA_OK) {
+        printf("Error loading script: %s\n", lua_tostring(L, -1));
+        lua_close(L);
+        consoleExit(NULL);
+        return 1;
+    }
+    if (lua_pcall(L, 0, 0, 0) != LUA_OK) {
+        printf("Error executing script: %s\n", lua_tostring(L, -1));
+        lua_close(L);
+        consoleExit(NULL);
+        return 1;
+    }
 
-    // cleanup
+    // Cleanup
     lua_close(L);
 
     // Main loop
