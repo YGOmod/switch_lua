@@ -23,4 +23,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: SwitchLua
-        path: source/SwitchLua.nro
+        path: /home/runner/work/switch_lua/switch_lua
